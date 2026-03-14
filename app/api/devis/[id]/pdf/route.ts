@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { renderToStream } from '@react-pdf/renderer'
 import { DevisPDF } from '@/components/pdf/devis-pdf'
-import { Document } from '@react-pdf/renderer'
 
 export async function GET(
   request: NextRequest,
@@ -84,8 +83,9 @@ export async function GET(
 
     // Générer le PDF
     const pdfStream = await renderToStream(
-      React.createElement(DevisPDF, { devis, userData }) as React.ReactElement<React.ComponentProps<typeof Document>>
+      React.createElement(DevisPDF, { devis, userData }) as any
     )
+    
 
     // Convertir le stream en buffer
     const chunks: Uint8Array[] = []

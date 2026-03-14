@@ -84,14 +84,12 @@ export async function GET(
     }
 
     // Générer le PDF
-    const pdfStream = await renderToStream(
-      React.createElement(FacturePDF, { facture, userData })
-    )
+    const pdfElement = React.createElement(FacturePDF, { facture, userData }) as any
+    const pdfStream = await renderToStream(pdfElement)
 
-    // Convertir le stream en buffer
-    const chunks: Uint8Array[] = []
+    const chunks: Buffer[] = []
     for await (const chunk of pdfStream) {
-      chunks.push(chunk)
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
     }
     const pdfBuffer = Buffer.concat(chunks)
 

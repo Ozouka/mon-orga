@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { Home, Users, Wrench, FileText, Calendar, Settings } from "lucide-react"
 import Link from "next/link"
@@ -47,13 +50,21 @@ const menuItems = [
 ]
 
 export function AppSidebar() {
+  const { setOpenMobile, isMobile } = useSidebar()
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false)
+    }
+  }
+
   return (
     <Sidebar>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/dashboard">
+              <Link href="/dashboard" onClick={handleLinkClick}>
                 <span className="font-bold text-lg">MonOrga</span>
               </Link>
             </SidebarMenuButton>
@@ -68,7 +79,7 @@ export function AppSidebar() {
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                    <Link href={item.url} onClick={handleLinkClick}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
@@ -83,7 +94,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/dashboard/settings">
+              <Link href="/dashboard/settings" onClick={handleLinkClick}>
                 <Settings />
                 <span>Paramètres</span>
               </Link>

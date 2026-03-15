@@ -166,6 +166,7 @@ export default async function DashboardPage() {
   const prochainesInterventions = prochainesInterventionsData?.map(intervention => ({
     ...intervention,
     client: clientsData?.find(c => c.id === intervention.client_id) || {
+      id: intervention.client_id || '',
       first_name: '',
       last_name: '',
       phone: '',

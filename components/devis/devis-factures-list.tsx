@@ -341,7 +341,7 @@ export function DevisFacturesList({ devis: initialDevis, factures: initialFactur
               >
                 {status === 'all' 
                   ? 'Tous' 
-                  : currentStatusConfig[status as keyof typeof currentStatusConfig]?.label || status}
+                  : (currentStatusConfig as any)[status]?.label || status}
               </Button>
             ))}
           </div>

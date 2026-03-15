@@ -66,28 +66,29 @@ export default async function DevisPage() {
     .eq('user_id', userId)
     .in('id', uniqueClientIds)
 
-  const devis = devisData?.map(devis => ({
-    ...devis,
-    client: clientsData?.find(c => c.id === devis.client_id) || {
-      first_name: '',
-      last_name: '',
-      phone: '',
-      address: null,
-      city: null,
-    },
-  })) || []
-
-  // Combiner les données pour les factures
-  const factures = facturesData?.map(facture => ({
-    ...facture,
-    client: clientsData?.find(c => c.id === facture.client_id) || {
-      first_name: '',
-      last_name: '',
-      phone: '',
-      address: null,
-      city: null,
-    },
-  })) || []
+    const devis = devisData?.map(devis => ({
+      ...devis,
+      client: clientsData?.find(c => c.id === devis.client_id) || {
+        id: devis.client_id || '', 
+        first_name: '',
+        last_name: '',
+        phone: '',
+        address: null,
+        city: null,
+      },
+    })) || []
+    
+    const factures = facturesData?.map(facture => ({
+      ...facture,
+      client: clientsData?.find(c => c.id === facture.client_id) || {
+        id: facture.client_id || '',
+        first_name: '',
+        last_name: '',
+        phone: '',
+        address: null,
+        city: null,
+      },
+    })) || []
 
   return (
     <div className="flex flex-col gap-6 p-4 sm:p-6 min-w-0">
